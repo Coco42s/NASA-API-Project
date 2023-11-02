@@ -82,11 +82,11 @@ S'ils ne sont pas présents, veuillez les créer.
 
 ### 7. Vérifiez également la présence du fichier 'icons8-nasa-16.png' dans le dossier 'assets'.
 
-S'il n'est pas présent, veuillez mettre en commentaire les lignes 35, 36 et 37.
+S'il n'est pas présent, veuillez mettre en commentaire les lignes 34, 35 et 36.
 
 ### 8. Clé API NASA
 
-Veuillez mètre votre clé d'api a la ligne 29
+Veuillez mètre votre clé d'api a la ligne 28
 Vous pouvez vous procurer une clé d'API sur le site d'api de la NASA [API_NASA](https://api.nasa.gov/)
 
 ---
