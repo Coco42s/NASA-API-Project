@@ -13,6 +13,7 @@ import requests, json, pygame
 from PIL import Image, ImageTk 
 from datetime import datetime, timedelta
 import os, re
+import time
 
 # ----- FONCTION -----#
 
@@ -22,10 +23,10 @@ def variable_init():
     """
     if not code_deja_execute.get():
         code_deja_execute.set(True)
-        global apod,photo,date_du_hier,name_current_api,choix_MRP_robot,color,ch_col,script_dir,date_du_jour,choice_public_mrp,choice_public_epic,key_api
-        apod,photo,name_current_api,choix_MRP_robot,color,ch_col,choice_public_mrp,choice_public_epic,script_dir = False,"",None,"curiosity",[["#FFFFFF"],["#2d2d30"]],0,None,None,os.path.dirname(os.path.abspath(__file__))
+        global apod,photo,date_du_hier,name_current_api,choix_MRP_robot,color,ch_col,script_dir,date_du_jour,choice_public_mrp,choice_public_epic,key_api,OpPAR
+        apod,photo,name_current_api,choix_MRP_robot,color,ch_col,choice_public_mrp,choice_public_epic,script_dir,OpPAR = False,"",None,"curiosity",[["#FFFFFF"],["#2d2d30"]],0,None,None,os.path.dirname(os.path.abspath(__file__)),False
         
-        key_api = "G54ksWgBREPIEEXopdLDF112Zjc0dIIRFWa8pOgL"
+        key_api = ""
         
         aujourdhui = datetime.today()
         hier = aujourdhui - timedelta(days=1)
@@ -56,9 +57,19 @@ def charge_color():
         color_change.configure(text="☾")
     else:
         ch_col = 0
-        color_change.configure(text="☀")
+        color_change.configure(text="☼")
     fenetre.configure(fg_color=color[ch_col][0])  
     list_API.config(bg=color[ch_col][0])
+    
+    
+    if OpPAR == True:
+        ViewPAR.configure(bg=color[ch_col][0])
+        Title.configure(bg_color=color[ch_col][0])
+        API_KEY_text.configure(bg_color=color[ch_col][0])
+        API_KEY_entry.configure(bg_color=color[ch_col][0])
+        Applay.configure(bg_color=color[ch_col][0])
+        Retour.configure(bg_color=color[ch_col][0])
+        FrameView.configure(bg=color[ch_col][0])
     
     if name_current_api == "APOD":
         window_width = fenetre.winfo_width()
@@ -148,10 +159,17 @@ def main_widget():
 
     Title_Header = Label(Header, text="NASA API Request", font=("Nasalization Rg",25, 'bold'), bg="#00205B",fg="white")
     Title_Header.pack(side="left", padx=40)
-
-    color_change = CTkButton(Header, text="☀", font=("Arial",20), width=35 , height=15)
+    
+    parametre = CTkButton(Header, text="⚙", font=("Arial",20), width=50 , height=15)
+    parametre.bind("<Button-1>", lambda event: (PAR_Toggle()))
+    parametre.pack(side="right",padx=(15,40))
+    
+    color_change = CTkButton(Header, text="☼",font=("Arial",20), width=50 , height=15)
     color_change.bind("<Button-1>", lambda event: (charge_color()))
-    color_change.pack(side="right", padx=40)
+    color_change.pack(side="right", padx=15)
+    
+    
+    
 
     #List API
     global name_current_api
@@ -172,6 +190,51 @@ def main_widget():
     EPIC= CTkButton(list_API, text="  Épopée DSCOVR  ", fg_color="gray",  hover_color="#9f9f9f", text_color="white", corner_radius=5, font=("Nasalization Rg",15))
     EPIC.bind("<Button-1>", lambda event: (destroy_element(name_current_api),name_api_curent_execute("EPIC"), EPIC_fonc()))
     EPIC.grid(column=2, row=0)
+
+#Warnings
+
+#Parametres
+
+def PAR_Toggle():
+    global OpPAR
+    destroy_element(name_current_api)
+    if OpPAR == False:
+        PAR_Interfaces()
+        OpPAR = True
+    else:
+        destroy_element("PARA")
+        OpPAR = False
+
+def PAR_Interfaces():
+    global ViewPAR,Title,FrameView,API_KEY_text,API_KEY_entry,Applay,Retour
+    ViewPAR = Frame(fenetre, bg=color[ch_col][0]) 
+    ViewPAR.pack(anchor=CENTER, pady=20, expand=True)
+
+    Title = CTkLabel(ViewPAR, text="Paramètre", font=("Nasalization Rg",30, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
+    Title.pack(anchor='center', padx=40)
+
+    FrameView = Frame(ViewPAR,bg=color[ch_col][0]) 
+    FrameView.pack(anchor=CENTER,pady=(70,0))
+    
+    API_KEY_text = CTkLabel(FrameView, text="API_KEY : ", font=("Nasalization Rg",13, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
+    API_KEY_text.grid(column=0,row=0,pady=5)
+    
+    API_KEY_entry= CTkEntry(FrameView, placeholder_text="Your Nasa API Keys", fg_color="#00205B",text_color="white", corner_radius=5)
+    API_KEY_entry.grid(column=1,row=0, padx=5)
+    
+    Applay = CTkButton(FrameView, text="Apliquer", fg_color="gray", hover_color="#9f9f9f", text_color="white", corner_radius=5, font=("Nasalization Rg",15), command= API_KEY_Change)
+    Applay.grid(column=1,row=1,padx=5, pady=3)
+    
+    Retour = CTkButton(FrameView, text="Retour", fg_color="gray", hover_color="#9f9f9f", text_color="white", corner_radius=5, font=("Nasalization Rg",15), command= PAR_Toggle)
+    Retour.grid(column=0,row=1,padx=5)
+    
+def API_KEY_Change():
+    global key_api
+    key_api = API_KEY_entry.get()
+    PAR_Toggle()
+    
+    
+
 
 # Configuration du proxy pour request
 def get_active_proxy():
@@ -778,7 +841,34 @@ def destroy_element(name=None):
             if isinstance(widget, CTkFrame): widget.destroy()
         for inter in [Title,FrameView,View,Paramètre,Entry_p,ReloadEPIC,ViewAPI]: inter.destroy()
         code_deja_execute_EPIC_Interface.set(False)
+    
+    
+    if name == "PARA":
+        widgets = fenetre.winfo_children()
+        for widget in widgets:
+            if isinstance(widget, CTkFrame): widget.destroy()
+        for inter in [ViewPAR,Title,FrameView,API_KEY_text,API_KEY_entry,Applay,Retour]: inter.destroy()
     return
+
+
+
+    """
+    ViewPAR = Frame(fenetre, bg=color[ch_col][0]) 
+    ViewPAR.pack(anchor=CENTER, pady=20, expand=True)
+
+    Title = CTkLabel(ViewPAR, text="Paramètre", font=("Nasalization Rg",30, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
+    Title.pack(anchor='center', padx=40)
+
+    FrameView = Frame(ViewPAR,bg=color[ch_col][0]) 
+    FrameView.pack(anchor=CENTER,pady=(70,0))
+    
+    API_KEY_text = CTkLabel(FrameView, text="API_KEY : ", font=("Nasalization Rg",13, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
+    API_KEY_text.grid(column=0,row=0,pady=5)
+    
+    API_KEY_entry= CTkEntry(FrameView, placeholder_text="Your Nasa API Keys", fg_color="#00205B",text_color="white", corner_radius=5)
+    API_KEY_entry.grid(column=1,row=0, padx=5)
+    """
+
 
 #fonc gengement de tail écran
 def uptade_interface(boll, name, r_interfaces, interface):
@@ -816,7 +906,7 @@ def uptade_interface(boll, name, r_interfaces, interface):
             if name == "MRP": MRP_ID_image(None, 0, API) 
             if name == "EPIC": EPIC_ID_image(None, dl=0, api=API)
 
-def check_window_size(event):
+def check_window_size(event=None):
     """Cette fonction sert a rediriger les configuration des fenetre
     Args: event (_<class 'tkinter.Event'>_): event tkinter """
     window_width = fenetre.winfo_width()
@@ -871,4 +961,6 @@ variable_init()
 proxy_init()
 main_widget()
 
+if key_api == "":
+    messagebox.showinfo("Error Clé API", "Entré votre clé d'API dans les Parametre")
 fenetre.mainloop() 
