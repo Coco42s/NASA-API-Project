@@ -25,7 +25,7 @@ def variable_init():
         global apod,photo,date_du_hier,name_current_api,choix_MRP_robot,color,ch_col,script_dir,date_du_jour,choice_public_mrp,choice_public_epic,key_api
         apod,photo,name_current_api,choix_MRP_robot,color,ch_col,choice_public_mrp,choice_public_epic,script_dir = False,"",None,"curiosity",[["#FFFFFF"],["#2d2d30"]],0,None,None,os.path.dirname(os.path.abspath(__file__))
         
-        key_api = ""
+        key_api = "G54ksWgBREPIEEXopdLDF112Zjc0dIIRFWa8pOgL"
         
         aujourdhui = datetime.today()
         hier = aujourdhui - timedelta(days=1)
