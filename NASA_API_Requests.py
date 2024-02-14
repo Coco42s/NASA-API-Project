@@ -56,7 +56,7 @@ def charge_color():
         color_change.configure(text="☾")
     else:
         ch_col = 0
-        color_change.configure(text="☀")
+        color_change.configure(text="☼")
     fenetre.configure(fg_color=color[ch_col][0])  
     list_API.config(bg=color[ch_col][0])
     
@@ -148,10 +148,16 @@ def main_widget():
 
     Title_Header = Label(Header, text="NASA API Request", font=("Nasalization Rg",25, 'bold'), bg="#00205B",fg="white")
     Title_Header.pack(side="left", padx=40)
-
-    color_change = CTkButton(Header, text="☀", font=("Arial",20), width=35 , height=15)
+    
+    parametre = CTkButton(Header, text="⚙", font=("Arial",20), width=50 , height=15)
+    parametre.pack(side="right")
+    
+    color_change = CTkButton(Header, text="☼",font=("Arial",20), width=50 , height=15)
     color_change.bind("<Button-1>", lambda event: (charge_color()))
-    color_change.pack(side="right", padx=40)
+    color_change.pack(side="right", padx=30)
+    
+    
+    
 
     #List API
     global name_current_api
