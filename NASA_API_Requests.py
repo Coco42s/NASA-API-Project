@@ -72,7 +72,7 @@ def charge_color():
         Entry_p.configure(bg_color=color[ch_col][0])
         ReloadAPOD.configure(bg_color=color[ch_col][0])
         labelText.configure(bg_color=color[ch_col][0])
-        
+    
     if name_current_api == "MRP":
         window_width = fenetre.winfo_width()
         if window_width < 1220: ViewAPI.configure(fg_color=color[ch_col][0])
@@ -268,7 +268,7 @@ def APOD_Interfaces():
     
         global Title,FrameView,View,FrameText,Paramètre,Entry_p,ReloadAPOD,labelText,ViewAPI
         ViewAPI = Frame(fenetre, bg=color[ch_col][0]) 
-        ViewAPI.pack(fill=BOTH, anchor=CENTER, pady=20)
+        ViewAPI.pack(anchor=CENTER, pady=20, expand=True)#fill=BOTH
         
         Title = CTkLabel(ViewAPI, text="", font=("Nasalization Rg",30, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
         Title.pack(anchor='center', padx=40)
@@ -281,7 +281,7 @@ def APOD_Interfaces():
 
         FrameText = Frame(FrameView, width=460, height=360, bg=color[ch_col][0])
         FrameText.grid(column=1,row=0, padx=30)
-        
+         
         Paramètre = Frame(FrameView, bg=color[ch_col][0])
         Paramètre.grid(column=0,row=1, padx=50)
         
@@ -425,7 +425,7 @@ def MRP_Interfaces():
     
         global Title,FrameView,View,Paramètre,Entry_p,ReloadMRP,Rover_label,Camera_label,Camera_combobox,Rover_combobox,ID_combobox,ViewAPI
         ViewAPI = Frame(fenetre, bg=color[ch_col][0]) 
-        ViewAPI.pack(fill=BOTH, anchor=CENTER, pady=20)
+        ViewAPI.pack(anchor=CENTER, pady=20, expand=True)#fill=BOTH
 
         Title = CTkLabel(ViewAPI, text="Photo Rover Mars", font=("Nasalization Rg",30, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
         Title.pack(anchor='center', padx=40)
@@ -609,7 +609,7 @@ def EPIC_Interfaces():
         
         global Title,FrameView,View,Paramètre,Entry_p,ReloadEPIC,ID_combobox,ViewAPI
         ViewAPI = Frame(fenetre, bg=color[ch_col][0]) 
-        ViewAPI.pack(fill=BOTH, anchor=CENTER, pady=20)
+        ViewAPI.pack(anchor=CENTER, pady=20, expand=True)#fill=BOTH
 
         Title = CTkLabel(ViewAPI, text="Earth Polychromatic Imaging Camera", font=("Nasalization Rg",30, 'bold'), fg_color="#00205B",text_color="white", corner_radius=5)
         Title.pack(anchor='center', padx=40)
@@ -838,7 +838,7 @@ fenetre.configure(fg_color="#FFFFFF")
 fenetre.geometry("1280x720")
 fenetre.title("API NASA Request")
 fenetre.configure(bg="white")
-fenetre.minsize(840, 300)
+fenetre.minsize(840, 720)
 font_path = "nasalization.ttf"
 fenetre.bind("<Configure>", check_window_size)
 
