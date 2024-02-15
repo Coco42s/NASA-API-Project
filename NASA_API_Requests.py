@@ -13,7 +13,7 @@ import requests, json, pygame
 from PIL import Image, ImageTk 
 from datetime import datetime, timedelta
 import os, re
-import time
+from tkextrafont import Font
 
 # ----- FONCTION -----#
 
@@ -35,6 +35,8 @@ def variable_init():
         fenetre.iconbitmap(os.path.join(script_dir, "assets//icons8-nasa-16.png"))
         image = PhotoImage(file=os.path.join(script_dir, "assets//icons8-nasa-16.png"))
         fenetre.iconphoto(False, image)
+        
+        Font(file=os.path.join(script_dir, "font/nasalization_rg.ttf"), family="Nasalization Rg")
 
 def verifie_format_date(chaine):
     """ Cette fonction verifier une une chane de caractaire est au forma XXXX-XX-XX
