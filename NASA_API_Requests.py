@@ -13,7 +13,8 @@ import requests, json, pygame
 from PIL import Image, ImageTk 
 from datetime import datetime, timedelta
 import os, re
-from tkextrafont import *
+from tkextrafont import Font
+#from tkextrafont import *
 
 # ----- FONCTION -----#
 
@@ -32,11 +33,11 @@ def variable_init():
         hier = aujourdhui - timedelta(days=1)
         date_du_jour,date_du_hier = aujourdhui.strftime("%Y-%m-%d"),hier.strftime("%Y-%m-%d")
         
-        fenetre.iconbitmap(os.path.join(script_dir, "assets//icons8-nasa-16.png"))
-        image = PhotoImage(file=os.path.join(script_dir, "assets//icons8-nasa-16.png"))
-        fenetre.iconphoto(False, image)
+        fenetre.iconbitmap(os.path.join(script_dir, "assets//nasa_logo_icon_170926.ico"))
+        #image = PhotoImage(file=os.path.join(script_dir, "assets//b109cb0bca51e213ba5971ed97039260.png"))
+        #fenetre.iconphoto(False, image)
         
-        Font(file=os.path.join(script_dir, "font/nasalization_rg.ttf"), family="Nasalization Rg")
+        #Font(file=os.path.join(script_dir, "font/nasalization_rg.ttf"), family="Nasalization Rg")
 
 def verifie_format_date(chaine):
     """ Cette fonction verifier une une chane de caractaire est au forma XXXX-XX-XX
@@ -124,7 +125,6 @@ def download(url, path_file, bool):
         _dict, list_: _description_
     """
     global progress_window
-    
     progress_window = Toplevel(fenetre)
     progress_window.title("Downloading...")
 

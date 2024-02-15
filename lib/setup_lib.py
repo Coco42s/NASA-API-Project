@@ -26,7 +26,8 @@ if __name__ == "__main__":
     "tqdm",
     "datetime ",
     "urllib3",
-    "python-nasa-api"
+    "python-nasa-api",
+    "tkextrafont"
     
 ]
     
