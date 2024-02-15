@@ -13,7 +13,7 @@ import requests, json, pygame
 from PIL import Image, ImageTk 
 from datetime import datetime, timedelta
 import os, re
-from tkextrafont import Font
+from tkextrafont import *
 
 # ----- FONCTION -----#
 
